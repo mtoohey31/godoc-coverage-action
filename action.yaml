@@ -3,7 +3,7 @@ description: "Ensure godoc coverage"
 inputs:
   go-version:
     description: "The Go version to download (if necessary) and use. Supports semver spec and ranges."
-    required: true
+    required: false
   stable:
     description: "Whether to download only stable versions"
     required: false
@@ -12,6 +12,9 @@ runs:
   using: "composite"
   steps:
     - uses: actions/setup-go@v2
+      with:
+        go-version: ${{ inputs.go-version }}
+        stable: ${{ inputs.stable }}
     - run: go install mtoohey.com/godoc-coverage@latest
       shell: sh
     - run: godoc-coverage .
